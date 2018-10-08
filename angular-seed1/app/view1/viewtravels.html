@@ -1,0 +1,130 @@
+
+<div class='row'>
+<dic class=''>
+<table id='travelist' class="table table-striped responsive-utilities ">
+	
+<thead>
+      <tr class="headings">
+        <th>Travel Name</th>
+        <th>Description </th>
+        <th>Start Date </th>
+        <th>End Date</th>
+        <th>Status </th>
+        <th>View </th>
+        <th>Confirm</th>
+        
+        </th>
+      </tr>
+</thead>
+
+<tbody>
+	<tr ng-repeat="travel in travels">
+		<td>{{travel.travel_name.toUpperCase()}}</td>
+		<td>{{travel.travel_meeting.toUpperCase()}}</td>
+		<td>{{travel.start_date.toUpperCase()}}</td>
+		<td>{{travel.end_date.toUpperCase()}}</td>
+		<td>{{travel.status}}</td>
+		<td> <a href="#/signup/travels/viewalll/{{travel.id}}" class="btn btn-success">View</a></td>
+		<td><a href="#/signup/travels/viewalll/{{travel.id}}" class="btn btn-success">Confirm</a></td>
+		<!-- <td><button class="btn btn-primary" ng-click="delete(travel.id, $index)">Delete</button></td> -->
+
+
+	</tr>
+
+</tbody>
+<tfoot></tfoot>
+</table>
+</div>
+</div>
+
+
+<script src="js/datatables/js/jquery.dataTables.js"></script>
+  <script src="js/datatables/tools/js/dataTables.tableTools.js"></script>
+
+  <!-- pace -->
+  <script src="js/pace/pace.min.js"></script>
+  <script>
+    
+    var asInitVals = new Array();
+    $(document).ready(function() {
+      var oTable = $('#travelist').dataTable(
+      {
+        "oLanguage": {
+          "sSearch": "Search all columns:"
+        },
+        "aoColumnDefs": [{
+            'bSortable': false,
+            'aTargets': [0]
+          } //disables sorting for column one
+        ],
+        'iDisplayLength': 12,
+        "sPaginationType": "full_numbers",
+        "dom": 'T<"clear">lfrtip',
+        
+      }
+      );
+      $("tfoot input").keyup(function() {
+        /* Filter on the column based on the index of this element's parent <th> */
+        oTable.fnFilter(this.value, $("tfoot th").index($(this).parent()));
+      });
+      $("tfoot input").each(function(i) {
+        asInitVals[i] = this.value;
+      });
+      $("tfoot input").focus(function() {
+        if (this.className == "search_init") {
+          this.className = "";
+          this.value = "";
+        }
+      });
+      $("tfoot input").blur(function(i) {
+        if (this.value == "") {
+          this.className = "search_init";
+          this.value = asInitVals[$("tfoot input").index(this)];
+        }
+      });
+    });
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<body>
+<form ng-model="travel">
+<div>
+<ul class="list-group">
+    <li ng-repeat="travel in travels" class="list-group-item">
+        {{travel.travel_name.toUpperCase()}}
+        {{travel.meeting.toUpperCase()}}
+        <!-- <a href="#/signup/travels/edit/{{travel.id}}" class="btn btn-success">Edit</a>
+        &nbsp;&nbsp;
+        <button class="btn btn-primary" ng-click="delete(travel.id, $index)">Delete</button>
+        &nbsp;&nbsp;
+ -->
+        <a href="#/signup/travels/editt/{{travel.id}}" class="btn btn-success">Confirm</a>
+       
+    </li>
+</ul>
+</div>
+</form>
+</body>
